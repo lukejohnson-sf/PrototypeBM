@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Business Manager</title>
+    <link rel="stylesheet" href="../assets/css/core.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/screens.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="bm-header">
+        <a href="../index.html" class="bm-header-logo">Business Manager</a>
+        <div class="bm-header-nav">
+            <a href="../index.html" class="bm-nav-link">Home</a>
+            <a href="dashboard.html" class="bm-nav-link">Dashboard</a>
+            <a href="orders.html" class="bm-nav-link">Orders</a>
+            <a href="products.html" class="bm-nav-link">Products</a>
+            <a href="customers.html" class="bm-nav-link">Customers</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="bm-sidebar">
+        <div class="bm-sidebar-section">
+            <h3 class="bm-sidebar-title">Main</h3>
+            <a href="dashboard.html" class="bm-sidebar-link">Dashboard</a>
+            <a href="orders.html" class="bm-sidebar-link">Orders</a>
+            <a href="products.html" class="bm-sidebar-link">Products</a>
+            <a href="customers.html" class="bm-sidebar-link">Customers</a>
+        </div>
+        <div class="bm-sidebar-section">
+            <h3 class="bm-sidebar-title">Analytics</h3>
+            <a href="#" class="bm-sidebar-link">Reports</a>
+            <a href="#" class="bm-sidebar-link">Insights</a>
+        </div>
+        <div class="bm-sidebar-section">
+            <h3 class="bm-sidebar-title">Settings</h3>
+            <a href="#" class="bm-sidebar-link">Site Preferences</a>
+            <a href="#" class="bm-sidebar-link">User Management</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="bm-content">
+        <div class="bm-content-header">
+            <h1 class="bm-content-title">Dashboard</h1>
+            <div class="bm-button-group">
+                <button class="bm-button bm-button-secondary bm-button-sm" onclick="refreshPage()">Refresh</button>
+                <button class="bm-button bm-button-primary bm-button-sm">Export</button>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="bm-stats-grid">
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Total Revenue</div>
+                <div class="bm-stat-value">$124,583</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 12.5%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Orders</div>
+                <div class="bm-stat-value">1,842</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 8.2%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Avg Order Value</div>
+                <div class="bm-stat-value">$67.64</div>
+                <div class="bm-stat-change negative">
+                    <span>↓ 3.1%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Conversion Rate</div>
+                <div class="bm-stat-value">3.42%</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 0.5%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="dashboard-grid">
+            <div class="bm-card">
+                <div class="bm-card-header">
+                    <h3 class="bm-card-title">Revenue Trends</h3>
+                </div>
+                <div class="bm-card-body">
+                    <div class="dashboard-chart">
+                        [Chart Placeholder - Sales over time]
+                    </div>
+                </div>
+            </div>
+
+            <div class="bm-card">
+                <div class="bm-card-header">
+                    <h3 class="bm-card-title">Top Products</h3>
+                </div>
+                <div class="bm-card-body">
+                    <div class="dashboard-chart">
+                        [Chart Placeholder - Product performance]
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="bm-card">
+            <div class="bm-card-header">
+                <h3 class="bm-card-title">Recent Orders</h3>
+                <a href="orders.html" class="bm-button bm-button-secondary bm-button-sm">View All</a>
+            </div>
+            <div class="bm-card-body">
+                <div class="bm-table-wrapper">
+                    <table class="bm-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-2847</td>
+                                <td>Sarah Johnson</td>
+                                <td>2026-04-22 10:34 AM</td>
+                                <td>$145.99</td>
+                                <td><span class="bm-badge bm-badge-success">Completed</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Print</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2846</td>
+                                <td>Michael Chen</td>
+                                <td>2026-04-22 09:15 AM</td>
+                                <td>$89.50</td>
+                                <td><span class="bm-badge bm-badge-warning">Processing</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Print</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2845</td>
+                                <td>Emily Rodriguez</td>
+                                <td>2026-04-21 04:22 PM</td>
+                                <td>$234.00</td>
+                                <td><span class="bm-badge bm-badge-primary">Shipped</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Print</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2844</td>
+                                <td>David Park</td>
+                                <td>2026-04-21 02:11 PM</td>
+                                <td>$52.75</td>
+                                <td><span class="bm-badge bm-badge-success">Completed</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Print</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2843</td>
+                                <td>Jessica Williams</td>
+                                <td>2026-04-21 11:45 AM</td>
+                                <td>$178.25</td>
+                                <td><span class="bm-badge bm-badge-danger">Cancelled</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Print</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/navigation.js"></script>
+    <script src="../assets/js/interactions.js"></script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Manager - Prototype Hub</title>
+    <link rel="stylesheet" href="assets/css/core.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="bm-header">
+        <a href="index.html" class="bm-header-logo">Business Manager</a>
+        <div class="bm-header-nav">
+            <a href="index.html" class="bm-nav-link active">Home</a>
+            <a href="screens/dashboard.html" class="bm-nav-link">Dashboard</a>
+            <a href="screens/orders.html" class="bm-nav-link">Orders</a>
+            <a href="screens/products.html" class="bm-nav-link">Products</a>
+            <a href="screens/customers.html" class="bm-nav-link">Customers</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="bm-content bm-content-full">
+        <div class="bm-container">
+            <div class="bm-content-header">
+                <h1 class="bm-content-title">Business Manager Prototype Hub</h1>
+            </div>
+
+            <div class="bm-alert bm-alert-info mb-lg">
+                <strong>Welcome to the BM Prototype System!</strong> This is a collaborative environment for Product Managers to experiment with UX updates. Use the navigation above or the cards below to explore different screens.
+            </div>
+
+            <!-- Screen Grid -->
+            <div class="bm-stats-grid">
+                <a href="screens/dashboard.html" class="bm-card" style="text-decoration: none; color: inherit;">
+                    <div class="bm-card-header">
+                        <h3 class="bm-card-title">Dashboard</h3>
+                        <span class="bm-badge bm-badge-success">Ready</span>
+                    </div>
+                    <div class="bm-card-body">
+                        <p class="text-secondary">Overview of key metrics, sales charts, and recent activity. The main landing page after login.</p>
+                    </div>
+                </a>
+
+                <a href="screens/orders.html" class="bm-card" style="text-decoration: none; color: inherit;">
+                    <div class="bm-card-header">
+                        <h3 class="bm-card-title">Orders</h3>
+                        <span class="bm-badge bm-badge-success">Ready</span>
+                    </div>
+                    <div class="bm-card-body">
+                        <p class="text-secondary">Order management interface with filtering, search, and detailed order views.</p>
+                    </div>
+                </a>
+
+                <a href="screens/products.html" class="bm-card" style="text-decoration: none; color: inherit;">
+                    <div class="bm-card-header">
+                        <h3 class="bm-card-title">Products</h3>
+                        <span class="bm-badge bm-badge-success">Ready</span>
+                    </div>
+                    <div class="bm-card-body">
+                        <p class="text-secondary">Product catalog with grid and table views. Edit product details, pricing, and inventory.</p>
+                    </div>
+                </a>
+
+                <a href="screens/customers.html" class="bm-card" style="text-decoration: none; color: inherit;">
+                    <div class="bm-card-header">
+                        <h3 class="bm-card-title">Customers</h3>
+                        <span class="bm-badge bm-badge-success">Ready</span>
+                    </div>
+                    <div class="bm-card-body">
+                        <p class="text-secondary">Customer database with profiles, order history, and segmentation tools.</p>
+                    </div>
+                </a>
+            </div>
+
+            <!-- Usage Guide -->
+            <div class="bm-card mt-xl">
+                <div class="bm-card-header">
+                    <h2 class="bm-card-title">How to Use This Prototype</h2>
+                </div>
+                <div class="bm-card-body">
+                    <h4>For Product Managers:</h4>
+                    <ol style="padding-left: 20px; margin-bottom: 16px;">
+                        <li style="margin-bottom: 8px;">Create your own branch: <code>git checkout -b pm-yourname</code></li>
+                        <li style="margin-bottom: 8px;">Navigate to any screen above and explore the interface</li>
+                        <li style="margin-bottom: 8px;">Use Claude Code to modify screens or create new ones</li>
+                        <li style="margin-bottom: 8px;">Test your changes by opening HTML files in your browser</li>
+                        <li style="margin-bottom: 8px;">Commit and push your changes to share with the team</li>
+                    </ol>
+
+                    <h4 class="mt-lg">Example Claude Prompts:</h4>
+                    <ul style="padding-left: 20px; list-style: disc;">
+                        <li style="margin-bottom: 8px;">"Add a filter bar to the products page"</li>
+                        <li style="margin-bottom: 8px;">"Create a new screen for site preferences"</li>
+                        <li style="margin-bottom: 8px;">"Update the dashboard to show revenue trends"</li>
+                        <li style="margin-bottom: 8px;">"Change the primary color to #FF6B35"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Project Info -->
+            <div class="bm-card">
+                <div class="bm-card-header">
+                    <h2 class="bm-card-title">Project Information</h2>
+                </div>
+                <div class="bm-card-body">
+                    <p><strong>Repository:</strong> bm-prototype</p>
+                    <p><strong>Branch Strategy:</strong> Each PM works on their own branch (pm-name), merges to main when ready</p>
+                    <p><strong>Tech Stack:</strong> Pure HTML/CSS/JavaScript (no build process required)</p>
+                    <p><strong>Design System:</strong> SFCC Business Manager style guidelines</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/navigation.js"></script>
+    <script src="assets/js/interactions.js"></script>
+</body>
+</html>

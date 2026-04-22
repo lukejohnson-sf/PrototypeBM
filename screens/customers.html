@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customers - Business Manager</title>
+    <link rel="stylesheet" href="../assets/css/core.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/screens.css">
+</head>
+<body>
+    <!-- Header -->
+    <nav class="bm-header">
+        <a href="../index.html" class="bm-header-logo">Business Manager</a>
+        <div class="bm-header-nav">
+            <a href="../index.html" class="bm-nav-link">Home</a>
+            <a href="dashboard.html" class="bm-nav-link">Dashboard</a>
+            <a href="orders.html" class="bm-nav-link">Orders</a>
+            <a href="products.html" class="bm-nav-link">Products</a>
+            <a href="customers.html" class="bm-nav-link">Customers</a>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="bm-sidebar">
+        <div class="bm-sidebar-section">
+            <h3 class="bm-sidebar-title">Main</h3>
+            <a href="dashboard.html" class="bm-sidebar-link">Dashboard</a>
+            <a href="orders.html" class="bm-sidebar-link">Orders</a>
+            <a href="products.html" class="bm-sidebar-link">Products</a>
+            <a href="customers.html" class="bm-sidebar-link">Customers</a>
+        </div>
+        <div class="bm-sidebar-section">
+            <h3 class="bm-sidebar-title">Customer Views</h3>
+            <a href="#" class="bm-sidebar-link active">All Customers</a>
+            <a href="#" class="bm-sidebar-link">VIP Customers</a>
+            <a href="#" class="bm-sidebar-link">Recent</a>
+            <a href="#" class="bm-sidebar-link">Segments</a>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="bm-content">
+        <div class="bm-content-header">
+            <h1 class="bm-content-title">Customers</h1>
+            <div class="bm-button-group">
+                <button class="bm-button bm-button-secondary">Export CSV</button>
+                <button class="bm-button bm-button-primary">Add Customer</button>
+            </div>
+        </div>
+
+        <!-- Customer Stats -->
+        <div class="bm-stats-grid">
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Total Customers</div>
+                <div class="bm-stat-value">12,483</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 245</span>
+                    <span class="text-secondary">this month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Active Customers</div>
+                <div class="bm-stat-value">8,921</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 5.2%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">New This Month</div>
+                <div class="bm-stat-value">245</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 18.3%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+
+            <div class="bm-stat-card">
+                <div class="bm-stat-label">Avg Lifetime Value</div>
+                <div class="bm-stat-value">$842</div>
+                <div class="bm-stat-change positive">
+                    <span>↑ 12.1%</span>
+                    <span class="text-secondary">vs last month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Search and Filters -->
+        <div class="bm-card">
+            <div class="bm-card-body">
+                <div style="display: flex; gap: 16px; align-items: flex-end;">
+                    <div class="bm-form-group" style="flex: 1; margin-bottom: 0;">
+                        <label class="bm-form-label">Search Customers</label>
+                        <input type="text" class="bm-form-field" placeholder="Name, email, or customer ID...">
+                    </div>
+                    <div class="bm-form-group" style="margin-bottom: 0;">
+                        <label class="bm-form-label">Segment</label>
+                        <select class="bm-form-field">
+                            <option>All Segments</option>
+                            <option>VIP</option>
+                            <option>Regular</option>
+                            <option>New</option>
+                            <option>Inactive</option>
+                        </select>
+                    </div>
+                    <div class="bm-form-group" style="margin-bottom: 0;">
+                        <label class="bm-form-label">Registration Date</label>
+                        <select class="bm-form-field">
+                            <option>All Time</option>
+                            <option>Last 30 days</option>
+                            <option>Last 90 days</option>
+                            <option>Last year</option>
+                        </select>
+                    </div>
+                    <button class="bm-button bm-button-primary">Search</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="bm-card">
+            <div class="bm-card-header">
+                <h3 class="bm-card-title">Customer List</h3>
+                <div style="display: flex; align-items: center; gap: 16px;">
+                    <span class="text-secondary text-sm">Showing 1-20 of 12,483</span>
+                </div>
+            </div>
+            <div class="bm-card-body">
+                <div class="bm-table-wrapper">
+                    <table class="bm-table">
+                        <thead>
+                            <tr>
+                                <th class="sortable">Customer</th>
+                                <th class="sortable">Email</th>
+                                <th class="sortable">Registration</th>
+                                <th class="sortable">Orders</th>
+                                <th class="sortable">Total Spent</th>
+                                <th>Segment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">SJ</div>
+                                        <div>
+                                            <strong>Sarah Johnson</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4782</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>sarah.j@email.com</td>
+                                <td>Jan 15, 2025</td>
+                                <td>24</td>
+                                <td><strong>$2,845.99</strong></td>
+                                <td><span class="bm-badge bm-badge-primary">VIP</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">MC</div>
+                                        <div>
+                                            <strong>Michael Chen</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4781</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>m.chen@email.com</td>
+                                <td>Mar 22, 2025</td>
+                                <td>8</td>
+                                <td><strong>$945.50</strong></td>
+                                <td><span class="bm-badge bm-badge-success">Regular</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">ER</div>
+                                        <div>
+                                            <strong>Emily Rodriguez</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4780</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>emily.r@email.com</td>
+                                <td>Dec 10, 2024</td>
+                                <td>15</td>
+                                <td><strong>$1,678.00</strong></td>
+                                <td><span class="bm-badge bm-badge-primary">VIP</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">DP</div>
+                                        <div>
+                                            <strong>David Park</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4779</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>david.park@email.com</td>
+                                <td>Apr 18, 2026</td>
+                                <td>2</td>
+                                <td><strong>$158.75</strong></td>
+                                <td><span class="bm-badge bm-badge-warning">New</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">JW</div>
+                                        <div>
+                                            <strong>Jessica Williams</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4778</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>j.williams@email.com</td>
+                                <td>Feb 5, 2025</td>
+                                <td>12</td>
+                                <td><strong>$1,234.25</strong></td>
+                                <td><span class="bm-badge bm-badge-success">Regular</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div style="display: flex; align-items: center; gap: 12px;">
+                                        <div class="customer-avatar" style="width: 40px; height: 40px; font-size: 14px;">RT</div>
+                                        <div>
+                                            <strong>Robert Taylor</strong><br>
+                                            <span class="text-secondary text-sm">ID: CUST-4777</span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>rob.t@email.com</td>
+                                <td>Nov 28, 2024</td>
+                                <td>5</td>
+                                <td><strong>$489.00</strong></td>
+                                <td><span class="bm-badge bm-badge-success">Regular</span></td>
+                                <td>
+                                    <div class="bm-table-actions">
+                                        <a href="#" class="bm-table-action-link">View</a>
+                                        <a href="#" class="bm-table-action-link">Edit</a>
+                                        <a href="#" class="bm-table-action-link">Orders</a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                <div class="bm-pagination">
+                    <a href="#" class="bm-pagination-item disabled">Previous</a>
+                    <a href="#" class="bm-pagination-item active">1</a>
+                    <a href="#" class="bm-pagination-item">2</a>
+                    <a href="#" class="bm-pagination-item">3</a>
+                    <a href="#" class="bm-pagination-item">4</a>
+                    <span class="bm-pagination-item disabled">...</span>
+                    <a href="#" class="bm-pagination-item">625</a>
+                    <a href="#" class="bm-pagination-item">Next</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/navigation.js"></script>
+    <script src="../assets/js/interactions.js"></script>
+</body>
+</html>

@@ -1,0 +1,170 @@
+/* ================================================
+   SFCC Business Manager - Screen-Specific Styles
+   ================================================ */
+
+/* Dashboard Screen */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+    gap: var(--bm-spacing-lg);
+}
+
+.dashboard-chart {
+    background-color: var(--bm-bg-primary);
+    border: 1px solid var(--bm-border-light);
+    border-radius: var(--bm-radius-lg);
+    padding: var(--bm-spacing-lg);
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bm-text-tertiary);
+}
+
+/* Product Screen */
+.product-filters {
+    display: flex;
+    gap: var(--bm-spacing-md);
+    margin-bottom: var(--bm-spacing-lg);
+    flex-wrap: wrap;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: var(--bm-spacing-lg);
+}
+
+.product-card {
+    background-color: var(--bm-bg-primary);
+    border: 1px solid var(--bm-border-light);
+    border-radius: var(--bm-radius-lg);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+    box-shadow: var(--bm-shadow-md);
+}
+
+.product-image {
+    width: 100%;
+    height: 200px;
+    background-color: var(--bm-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bm-text-tertiary);
+}
+
+.product-info {
+    padding: var(--bm-spacing-md);
+}
+
+.product-name {
+    font-weight: var(--bm-font-weight-semibold);
+    margin-bottom: var(--bm-spacing-xs);
+}
+
+.product-sku {
+    font-size: var(--bm-font-size-sm);
+    color: var(--bm-text-secondary);
+    margin-bottom: var(--bm-spacing-sm);
+}
+
+.product-price {
+    font-size: var(--bm-font-size-lg);
+    font-weight: var(--bm-font-weight-bold);
+    color: var(--bm-primary);
+}
+
+/* Orders Screen */
+.order-status-filter {
+    display: flex;
+    gap: var(--bm-spacing-sm);
+    margin-bottom: var(--bm-spacing-lg);
+}
+
+.order-summary {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--bm-spacing-lg);
+}
+
+.order-items-list {
+    list-style: none;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--bm-spacing-md);
+    border-bottom: 1px solid var(--bm-border-light);
+}
+
+.order-item:last-child {
+    border-bottom: none;
+}
+
+/* Customer Screen */
+.customer-header {
+    display: flex;
+    gap: var(--bm-spacing-lg);
+    align-items: flex-start;
+    margin-bottom: var(--bm-spacing-xl);
+}
+
+.customer-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--bm-bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--bm-font-size-xl);
+    font-weight: var(--bm-font-weight-bold);
+    color: var(--bm-text-secondary);
+}
+
+.customer-details {
+    flex: 1;
+}
+
+.customer-name {
+    font-size: var(--bm-font-size-xl);
+    font-weight: var(--bm-font-weight-semibold);
+    margin-bottom: var(--bm-spacing-xs);
+}
+
+.customer-meta {
+    display: flex;
+    gap: var(--bm-spacing-lg);
+    color: var(--bm-text-secondary);
+    font-size: var(--bm-font-size-sm);
+}
+
+/* Settings Screen */
+.settings-sidebar {
+    width: 200px;
+    background-color: var(--bm-bg-primary);
+    border-right: 1px solid var(--bm-border-light);
+    padding: var(--bm-spacing-lg);
+}
+
+.settings-content {
+    flex: 1;
+    padding: var(--bm-spacing-lg);
+}
+
+.settings-section {
+    margin-bottom: var(--bm-spacing-xxl);
+}
+
+.settings-section-title {
+    font-size: var(--bm-font-size-lg);
+    font-weight: var(--bm-font-weight-semibold);
+    margin-bottom: var(--bm-spacing-lg);
+    padding-bottom: var(--bm-spacing-md);
+    border-bottom: 1px solid var(--bm-border-light);
+}
