@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test-pd-zyoc-02-apr21 - Business Manager</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/core.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Salesforce Sans", Arial, sans-serif;
+            background-color: #F3F3F3;
+        }
+
+        /* Salesforce-style header */
+        .sf-header {
+            height: 56px;
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E5E5E5;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 16px;
+        }
+
+        .sf-app-launcher {
+            width: 32px;
+            height: 32px;
+            display: grid;
+            grid-template-columns: repeat(3, 8px);
+            grid-template-rows: repeat(3, 8px);
+            gap: 2px;
+            cursor: pointer;
+        }
+
+        .sf-app-launcher-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #706E6B;
+            border-radius: 2px;
+        }
+
+        .sf-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #181818;
+        }
+
+        .sf-cloud {
+            font-size: 28px;
+        }
+
+        .sf-sandbox-badge {
+            background-color: #3E3E3C;
+            color: #FFFFFF;
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .sf-header-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sf-icon-button {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #706E6B;
+            font-size: 20px;
+        }
+
+        /* Layout */
+        .sf-layout {
+            display: flex;
+            height: calc(100vh - 56px);
+        }
+
+        .sf-sidebar {
+            width: 212px;
+            background-color: #FAFAF9;
+            border-right: 1px solid #E5E5E5;
+            padding: 16px 0;
+            overflow-y: auto;
+        }
+
+        .sf-site-selector {
+            margin: 0 12px 16px;
+            padding: 8px 12px;
+            border: 1px solid #C9C9C9;
+            border-radius: 4px;
+            background-color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .sf-site-selector-icon {
+            font-size: 16px;
+        }
+
+        .sf-search {
+            margin: 0 12px 16px;
+            position: relative;
+        }
+
+        .sf-search-input {
+            width: 100%;
+            padding: 8px 12px 8px 32px;
+            border: 1px solid #C9C9C9;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .sf-search-icon {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #706E6B;
+            font-size: 14px;
+        }
+
+        .sf-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            margin: 0 8px;
+            color: #181818;
+            text-decoration: none;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .sf-nav-item:hover {
+            background-color: #E5E5E5;
+        }
+
+        .sf-nav-item.active {
+            background-color: #E3F3FF;
+            color: #014486;
+            font-weight: 600;
+        }
+
+        .sf-nav-item-icon {
+            font-size: 16px;
+            width: 20px;
+        }
+
+        .sf-nav-section {
+            margin-top: 16px;
+        }
+
+        .sf-nav-section-title {
+            font-size: 11px;
+            font-weight: 600;
+            color: #706E6B;
+            text-transform: uppercase;
+            padding: 8px 12px;
+            margin: 0 8px;
+        }
+
+        .sf-nav-expandable {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            margin: 0 8px;
+            color: #181818;
+            font-size: 13px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .sf-nav-expandable:hover {
+            background-color: #E5E5E5;
+        }
+
+        .sf-nav-expandable.expanded {
+            background-color: #FFFFFF;
+        }
+
+        .sf-nav-subitems {
+            padding-left: 28px;
+        }
+
+        /* Main Content */
+        .sf-main {
+            flex: 1;
+            overflow-y: auto;
+            background-color: #F3F3F3;
+        }
+
+        .sf-content {
+            padding: 24px;
+            max-width: 1400px;
+        }
+
+        .sf-back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #706E6B;
+            text-decoration: none;
+            font-size: 14px;
+            margin-bottom: 16px;
+        }
+
+        .sf-back-link:hover {
+            color: #0176D3;
+        }
+
+        .sf-page-title {
+            font-size: 28px;
+            font-weight: 300;
+            color: #181818;
+            margin: 0 0 24px 0;
+        }
+
+        /* API Access Section */
+        .sf-section {
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .sf-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .sf-section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #181818;
+            margin: 0;
+        }
+
+        .sf-download-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background-color: #FFFFFF;
+            border: 1px solid #0176D3;
+            border-radius: 4px;
+            color: #0176D3;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sf-download-button:hover {
+            background-color: #F3F3F3;
+        }
+
+        .sf-api-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 16px;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .sf-api-icon {
+            width: 24px;
+            height: 24px;
+            color: #706E6B;
+            flex-shrink: 0;
+        }
+
+        .sf-api-content {
+            flex: 1;
+        }
+
+        .sf-api-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #181818;
+            margin: 0 0 4px 0;
+        }
+
+        .sf-api-description {
+            font-size: 13px;
+            color: #706E6B;
+            margin: 0;
+        }
+
+        .sf-api-action {
+            color: #0176D3;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sf-api-action:hover {
+            text-decoration: underline;
+        }
+
+        /* Environments Table */
+        .sf-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .sf-table thead {
+            background-color: #FAFAF9;
+            border-bottom: 2px solid #E5E5E5;
+        }
+
+        .sf-table th {
+            text-align: left;
+            padding: 12px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #706E6B;
+            text-transform: uppercase;
+        }
+
+        .sf-table td {
+            padding: 12px 16px;
+            font-size: 13px;
+            color: #181818;
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .sf-env-name {
+            color: #0176D3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .sf-env-name:hover {
+            text-decoration: underline;
+        }
+
+        .sf-status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background-color: #D0F0D5;
+            color: #2E844A;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .sf-icon-link {
+            color: #0176D3;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .sf-create-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            background-color: #0176D3;
+            border: none;
+            border-radius: 4px;
+            color: #FFFFFF;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .sf-create-button:hover {
+            background-color: #014486;
+        }
+
+        /* Right Sidebar */
+        .sf-right-sidebar {
+            width: 320px;
+            background-color: #FAFAF9;
+            border-left: 1px solid #E5E5E5;
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .sf-sidebar-section {
+            margin-bottom: 32px;
+        }
+
+        .sf-sidebar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #181818;
+            margin: 0 0 16px 0;
+        }
+
+        .sf-site-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #181818;
+            margin-bottom: 16px;
+        }
+
+        .sf-resource-link {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 12px;
+            background-color: #FFFFFF;
+            border: 1px solid #E5E5E5;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 12px;
+        }
+
+        .sf-resource-link:hover {
+            border-color: #0176D3;
+        }
+
+        .sf-resource-icon {
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .sf-resource-content {
+            flex: 1;
+        }
+
+        .sf-resource-title {
+            font-size: 13px;
+            color: #0176D3;
+            font-weight: 600;
+            margin: 0 0 4px 0;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .sf-external-icon {
+            font-size: 12px;
+        }
+
+        .sf-resource-description {
+            font-size: 12px;
+            color: #706E6B;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="sf-header">
+        <div class="sf-app-launcher">
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+            <div class="sf-app-launcher-dot"></div>
+        </div>
+        <div class="sf-logo">
+            <span class="sf-cloud">☁️</span>
+            <span>Administration</span>
+        </div>
+        <div class="sf-sandbox-badge">Sandbox - zyoc</div>
+        <div class="sf-header-actions">
+            <button class="sf-icon-button" title="Figma">🎨</button>
+            <button class="sf-icon-button" title="Favorites">★</button>
+            <button class="sf-icon-button" title="Settings">▼</button>
+            <button class="sf-icon-button" title="Notifications">🔔</button>
+            <button class="sf-icon-button" title="Help">?</button>
+            <button class="sf-icon-button" title="Alerts">🔔</button>
+            <button class="sf-icon-button" title="Profile">👤</button>
+            <button class="sf-icon-button" title="Sign Out">⎋</button>
+        </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="sf-layout">
+        <!-- Left Sidebar -->
+        <aside class="sf-sidebar">
+            <div class="sf-site-selector">
+                <span>🏬 <strong>Market Street</strong></span>
+                <span>▼</span>
+            </div>
+
+            <div class="sf-search">
+                <span class="sf-search-icon">🔍</span>
+                <input type="text" class="sf-search-input" placeholder="Quick Find">
+            </div>
+
+            <a href="#" class="sf-nav-item">
+                <span class="sf-nav-item-icon">🏠</span>
+                <span>Home</span>
+            </a>
+
+            <div class="sf-nav-section">
+                <div class="sf-nav-expandable">
+                    <span>📋 Replication</span>
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="sf-nav-section">
+                <div class="sf-nav-expandable">
+                    <span>🏢 Organization</span>
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="sf-nav-section">
+                <div class="sf-nav-expandable expanded">
+                    <span>🌐 Sites</span>
+                    <span>▲</span>
+                </div>
+                <div class="sf-nav-subitems">
+                    <a href="#" class="sf-nav-item">Manage Sites</a>
+                    <a href="#" class="sf-nav-item active">Storefronts</a>
+                    <a href="#" class="sf-nav-item">Customer Lists</a>
+                    <a href="#" class="sf-nav-item">Content Libraries</a>
+                    <a href="#" class="sf-nav-item">Batch Processes Sites</a>
+                    <a href="#" class="sf-nav-item">Embedded CDN Settings</a>
+                </div>
+            </div>
+
+            <div class="sf-nav-section">
+                <div class="sf-nav-expandable">
+                    <span>&lt;/&gt; Site Development</span>
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div class="sf-nav-section">
+                <div class="sf-nav-expandable">
+                    <span>⚙️ Global Preferences</span>
+                    <span>▼</span>
+                </div>
+            </div>
+
+            <div style="margin-top: 32px; padding: 0 12px;">
+                <a href="#" class="sf-nav-item">
+                    <span class="sf-nav-item-icon">👁️</span>
+                    <span>Storefront</span>
+                </a>
+                <a href="#" class="sf-nav-item">
+                    <span class="sf-nav-item-icon">🔧</span>
+                    <span>Toolkit</span>
+                </a>
+                <button class="sf-nav-item" style="width: 100%; border: none; background: none; text-align: left;">
+                    <span class="sf-nav-item-icon">⏪</span>
+                    <span>Collapse</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="sf-main">
+            <div class="sf-content">
+                <a href="storefronts.html" class="sf-back-link">
+                    <span>←</span>
+                    <span>Back</span>
+                </a>
+
+                <h1 class="sf-page-title">test-pd-zyoc-02-apr21</h1>
+
+                <!-- API Access Section -->
+                <div class="sf-section">
+                    <div class="sf-section-header">
+                        <h2 class="sf-section-title">API Access</h2>
+                        <a href="#" class="sf-download-button">
+                            <span>⬇️</span>
+                            <span>Download .csv</span>
+                        </a>
+                    </div>
+
+                    <div class="sf-api-card">
+                        <div class="sf-api-icon">🔑</div>
+                        <div class="sf-api-content">
+                            <h3 class="sf-api-title">Salesforce Commerce API</h3>
+                            <p class="sf-api-description">Manage your Account Manager API client, SCAPI admin scopes, passwords, roles, and instances.</p>
+                        </div>
+                        <a href="#" class="sf-api-action">Manage</a>
+                    </div>
+
+                    <div class="sf-api-card">
+                        <div class="sf-api-icon">🔒</div>
+                        <div class="sf-api-content">
+                            <h3 class="sf-api-title">SLAS Client</h3>
+                            <p class="sf-api-description">Configure scopes, passwords, redirects, and callback URLs.</p>
+                        </div>
+                        <a href="#" class="sf-api-action">Manage</a>
+                    </div>
+                </div>
+
+                <!-- Environments Section -->
+                <div class="sf-section">
+                    <div class="sf-section-header">
+                        <h2 class="sf-section-title">Environments</h2>
+                        <button class="sf-create-button">Create</button>
+                    </div>
+
+                    <table class="sf-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                                <th>Updated</th>
+                                <th>View</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="#" class="sf-env-name">00f152c1133aa41cfc82a752e5</a></td>
+                                <td><span class="sf-status-badge">Ready</span></td>
+                                <td>Yesterday 8:30 pm</td>
+                                <td><span class="sf-icon-link">👁️</span></td>
+                                <td><span class="sf-icon-link">⋮</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+
+        <!-- Right Sidebar -->
+        <aside class="sf-right-sidebar">
+            <div class="sf-sidebar-section">
+                <h3 class="sf-sidebar-title">Sites</h3>
+                <div class="sf-site-badge">MarketStreet</div>
+            </div>
+
+            <div class="sf-sidebar-section">
+                <h3 class="sf-sidebar-title">Resources</h3>
+
+                <a href="#" class="sf-resource-link">
+                    <div class="sf-resource-icon">🎨</div>
+                    <div class="sf-resource-content">
+                        <h4 class="sf-resource-title">
+                            Storefront Next Template
+                            <span class="sf-external-icon">↗</span>
+                        </h4>
+                        <p class="sf-resource-description">Download the official template from Figma and start designing your storefront.</p>
+                    </div>
+                </a>
+
+                <a href="#" class="sf-resource-link">
+                    <div class="sf-resource-icon">📄</div>
+                    <div class="sf-resource-content">
+                        <h4 class="sf-resource-title">
+                            Storefront Next Documentation
+                            <span class="sf-external-icon">↗</span>
+                        </h4>
+                        <p class="sf-resource-description">Learn about Storefront Next features and how to customize a storefront.</p>
+                    </div>
+                </a>
+            </div>
+        </aside>
+    </div>
+</body>
+</html>
