@@ -2,31 +2,44 @@
 
 A collaborative prototype environment for SFCC Business Manager that enables Product Managers to experiment with UX updates and design changes.
 
+## 🌐 Live Demo
+
+View the prototype online: **https://lukejohnson-sf.github.io/PrototypeBM/**
+
+No installation needed - just click and explore!
+
 ## Quick Start
 
-### 1. Clone the Repository
+### Option 1: View Online (Easiest)
+
+Just visit: **https://lukejohnson-sf.github.io/PrototypeBM/**
+
+### Option 2: Use GitHub Codespaces (For Editing)
+
+1. Go to: https://github.com/lukejohnson-sf/PrototypeBM
+2. Click the green **"Code"** button
+3. Select **"Codespaces"** tab
+4. Click **"Create codespace on main"**
+5. Wait for environment to load (~1 minute)
+6. Open `index.html` with Live Server or run: `python3 -m http.server 8000`
+7. Click the popup to open in browser
+
+Codespaces gives you a full VS Code environment in your browser with Live Server for instant preview!
+
+### Option 3: Clone Locally
 
 ```bash
-git clone [repository-url]
-cd bm-prototype
+# Clone the repository
+git clone https://github.com/lukejohnson-sf/PrototypeBM.git
+cd PrototypeBM
+
+# Open in browser
+open index.html  # Mac
+start index.html  # Windows
+xdg-open index.html  # Linux
 ```
 
-### 2. Open in Browser
-
-Simply open `index.html` in your web browser. No build process or dependencies required!
-
-```bash
-# Mac
-open index.html
-
-# Windows
-start index.html
-
-# Linux
-xdg-open index.html
-```
-
-### 3. Create Your Branch
+### Creating Your Branch
 
 ```bash
 # Create your personal branch

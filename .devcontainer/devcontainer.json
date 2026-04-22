@@ -1,0 +1,26 @@
+{
+  "name": "BM Prototype Environment",
+  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "features": {
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ritwickdey.liveserver",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode"
+      ],
+      "settings": {
+        "liveServer.settings.port": 5500,
+        "liveServer.settings.CustomBrowser": "chrome",
+        "liveServer.settings.AdvanceCustomBrowserCmdLine": ""
+      }
+    }
+  },
+  "forwardPorts": [5500, 8000],
+  "postCreateCommand": "echo 'Prototype environment ready! Open index.html with Live Server or run: python3 -m http.server 8000'",
+  "remoteUser": "codespace"
+}
