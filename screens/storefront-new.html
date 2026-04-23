@@ -289,26 +289,22 @@
         }
 
         .account-owner-remove {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 3px 8px 3px 6px;
-            border-radius: 10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
             border: none;
             background-color: #E5E5E5;
             color: #706E6B;
             font-size: 12px;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             line-height: 1;
+            padding: 0;
             flex-shrink: 0;
             transition: background-color 0.15s, color 0.15s;
-            white-space: nowrap;
-        }
-
-        .account-owner-remove .remove-label {
-            display: none;
-            font-size: 12px;
-            font-weight: 500;
+            position: relative;
         }
 
         .account-owner-remove:hover {
@@ -316,8 +312,19 @@
             color: #FFFFFF;
         }
 
-        .account-owner-remove:hover .remove-label {
-            display: inline;
+        .account-owner-remove:hover::after {
+            content: "Remove";
+            position: absolute;
+            bottom: calc(100% + 6px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #3E3E3C;
+            color: #FFFFFF;
+            font-size: 11px;
+            white-space: nowrap;
+            padding: 4px 8px;
+            border-radius: 4px;
+            pointer-events: none;
         }
 
         .account-dropdown-divider {
@@ -745,7 +752,7 @@
                                         <path d="M12,2C6.5,2,2,6.5,2,12c0,4.4,2.9,8.2,6.8,9.5c0.5,0.1,0.7-0.2,0.7-0.5c0-0.2,0-0.9,0-1.7C6.7,19.9,6.1,18,6.1,18c-0.4-1-1-1.3-1-1.3c-0.8-0.6,0.1-0.6,0.1-0.6c0.9,0.1,1.4,0.9,1.4,0.9c0.8,1.4,2.1,1,2.6,0.7c0.1-0.6,0.3-1,0.6-1.2C7.5,16.3,5.5,15.5,5.5,12c0-1,0.4-1.9,1-2.6C6.3,9.1,5.9,8,6.5,6.7c0,0,0.8-0.3,2.7,1c0.8-0.2,1.6-0.3,2.4-0.3s1.6,0.1,2.4,0.3c1.9-1.2,2.7-1,2.7-1c0.6,1.4,0.2,2.4,0.1,2.6c0.6,0.7,1,1.6,1,2.6c0,3.5-2.1,4.3-4.1,4.5c0.3,0.3,0.6,0.9,0.6,1.8c0,1.3,0,2.4,0,2.7c0,0.3,0.2,0.6,0.7,0.5C19.1,20.2,22,16.4,22,12C22,6.5,17.5,2,12,2z"/>
                                     </svg>
                                     <span class="account-dropdown-item-name">lukejohnson-sf</span>
-                                    <button class="account-owner-remove" onclick="showRemoveModal(event)">✕<span class="remove-label">Remove</span></button>
+                                    <button class="account-owner-remove" onclick="showRemoveModal(event)">✕</button>
                                 </div>
                                 <div class="account-dropdown-divider"></div>
                                 <div class="account-dropdown-add">
