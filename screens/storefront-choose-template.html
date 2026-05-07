@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose Template - Business Manager</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="../assets/css/core.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+    <link rel="stylesheet" href="../assets/css/dev-workspace.css">
+    <style>
+        .choose-template-page {
+            background-color: #F3F3F3;
+            min-height: calc(100vh - 56px);
+        }
+
+        .choose-template-inner {
+            padding: 40px 48px;
+        }
+
+        .choose-template-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #181818;
+            margin-bottom: 28px;
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .template-card {
+            background: #fff;
+            border: 1px solid #E5E5E5;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: border-color 0.15s, box-shadow 0.15s;
+            text-decoration: none;
+            display: block;
+        }
+
+        .template-card:hover {
+            border-color: #0176D3;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+        }
+
+        .template-card.coming-soon {
+            cursor: default;
+        }
+
+        .template-card.coming-soon:hover {
+            border-color: #E5E5E5;
+            box-shadow: none;
+        }
+
+        .template-preview {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+            background: #F9F9F9;
+        }
+
+        /* ---- Market Street preview ---- */
+        .preview-ms {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-ms-nav {
+            height: 28px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 6px;
+        }
+
+        .preview-ms-nav-logo {
+            width: 14px; height: 14px;
+            border: 1.5px solid #888;
+            border-radius: 2px;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .preview-ms-nav-links {
+            display: flex; gap: 8px; margin-left: 6px;
+        }
+
+        .preview-ms-nav-link {
+            font-size: 8px; color: #444; white-space: nowrap;
+        }
+
+        .preview-ms-nav-link.sale { color: #E53935; }
+
+        .preview-ms-nav-icons {
+            margin-left: auto;
+            display: flex; gap: 4px;
+        }
+
+        .preview-ms-nav-icon {
+            width: 8px; height: 8px;
+            background: #ccc;
+            border-radius: 50%;
+        }
+
+        .preview-ms-hero {
+            position: relative;
+            background: linear-gradient(135deg, #c8b89a 0%, #a89070 100%);
+            flex: 0 0 110px;
+            display: flex; align-items: flex-end;
+            padding: 10px;
+        }
+
+        .preview-ms-hero-text {
+            background: rgba(0,0,0,0.4);
+            color: #fff;
+            font-size: 7px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 2px;
+        }
+
+        .preview-ms-section-title {
+            font-size: 8px;
+            font-weight: 700;
+            color: #222;
+            text-align: center;
+            padding: 6px 0 2px;
+        }
+
+        .preview-ms-sub {
+            font-size: 6.5px;
+            color: #888;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .preview-ms-products {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 6px;
+            padding: 0 10px;
+        }
+
+        .preview-ms-product {
+            display: flex; flex-direction: column; gap: 3px;
+        }
+
+        .preview-ms-product-img {
+            aspect-ratio: 1;
+            border-radius: 2px;
+        }
+
+        .preview-ms-product-img.shoe-1 { background: linear-gradient(135deg, #e8d5b0 0%, #c4a882 100%); }
+        .preview-ms-product-img.shoe-2 { background: linear-gradient(135deg, #8B6914 0%, #6B4F10 100%); }
+        .preview-ms-product-img.shoe-3 { background: linear-gradient(135deg, #E8E8E8 0%, #C8C8C8 100%); }
+        .preview-ms-product-img.shoe-4 { background: linear-gradient(135deg, #2C2C2C 0%, #1A1A1A 100%); }
+
+        .preview-ms-product-name { font-size: 5.5px; color: #444; line-height: 1.2; }
+        .preview-ms-product-price { font-size: 5.5px; color: #222; font-weight: 600; }
+        .preview-ms-product-swatches { display: flex; gap: 2px; }
+        .preview-ms-product-swatch { width: 5px; height: 5px; border-radius: 50%; }
+
+        .preview-ms-add-btn {
+            background: #222;
+            color: #fff;
+            font-size: 5px;
+            text-align: center;
+            padding: 2px;
+            border-radius: 1px;
+            margin-top: 2px;
+        }
+
+        /* ---- Cosmetic Street preview ---- */
+        .preview-cs {
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .preview-cs-nav {
+            height: 28px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            padding: 0 10px;
+            gap: 6px;
+        }
+
+        .preview-cs-hero {
+            flex: 0 0 120px;
+            background: linear-gradient(135deg, #FF6B8A 0%, #C2185B 40%, #880E4F 100%);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 8px;
+            position: relative;
+        }
+
+        .preview-cs-new-badge {
+            position: absolute; top: 6px; left: 50%;
+            transform: translateX(-50%);
+            background: #E91E63;
+            color: #fff;
+            font-size: 6px;
+            font-weight: 700;
+            padding: 1px 5px;
+            border-radius: 2px;
+            letter-spacing: 0.05em;
+        }
+
+        .preview-cs-hero-product {
+            font-size: 9px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+            line-height: 1.1;
+        }
+
+        .preview-cs-hero-sub {
+            font-size: 6px;
+            color: rgba(255,255,255,0.85);
+            text-align: center;
+        }
+
+        .preview-cs-trending {
+            font-size: 7px;
+            font-weight: 800;
+            text-align: center;
+            color: #222;
+            padding: 5px 0 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .preview-cs-products {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 4px;
+            padding: 0 8px;
+        }
+
+        .preview-cs-product {
+            display: flex; flex-direction: column; gap: 2px;
+        }
+
+        .preview-cs-product-img {
+            aspect-ratio: 1;
+            border-radius: 2px;
+        }
+
+        .preview-cs-product-img.p1 { background: linear-gradient(135deg, #F48FB1 0%, #E91E63 100%); }
+        .preview-cs-product-img.p2 { background: linear-gradient(135deg, #222 0%, #555 100%); }
+        .preview-cs-product-img.p3 { background: linear-gradient(135deg, #CE93D8 0%, #9C27B0 100%); }
+        .preview-cs-product-img.p4 { background: linear-gradient(135deg, #111 0%, #333 100%); }
+        .preview-cs-product-img.p5 { background: linear-gradient(135deg, #E8E8E8 0%, #BDBDBD 100%); }
+        .preview-cs-product-img.p6 { background: linear-gradient(135deg, #B71C1C 0%, #F44336 100%); }
+
+        .preview-cs-product-price { font-size: 5px; color: #222; font-weight: 600; text-align: center; }
+
+        .preview-cs-add-btn {
+            background: #E91E63;
+            color: #fff;
+            font-size: 4.5px;
+            text-align: center;
+            padding: 1.5px;
+            border-radius: 1px;
+        }
+
+        /* ---- Coming Soon card ---- */
+        .preview-coming-soon {
+            background: #F9F9F9;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .coming-soon-stack {
+            position: relative;
+            width: 140px; height: 100px;
+            margin-bottom: 8px;
+        }
+
+        .coming-soon-card-back {
+            position: absolute;
+            top: 12px; right: 0;
+            width: 115px; height: 80px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .coming-soon-card-front {
+            position: absolute;
+            top: 0; left: 0;
+            width: 115px; height: 80px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .coming-soon-card-inner {
+            display: flex; flex-direction: column;
+        }
+
+        .cs-mini-nav {
+            height: 14px;
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            display: flex; align-items: center;
+            padding: 0 6px; gap: 4px;
+        }
+
+        .cs-mini-logo { font-size: 5px; color: #888; font-weight: 700; }
+
+        .cs-mini-hero {
+            background: linear-gradient(135deg, #80CBC4 0%, #26A69A 100%);
+            flex: 0 0 32px;
+        }
+
+        .cs-mini-content {
+            padding: 4px 6px;
+        }
+
+        .cs-mini-title { font-size: 5px; font-weight: 700; color: #222; }
+        .cs-mini-sub { font-size: 4px; color: #888; }
+
+        /* ---- Card footer ---- */
+        .template-footer {
+            padding: 14px 16px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .template-name-group {}
+
+        .template-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #0176D3;
+            margin-bottom: 2px;
+        }
+
+        .template-category {
+            font-size: 12px;
+            color: #706E6B;
+        }
+
+        .template-label-btn {
+            padding: 5px 16px;
+            border: 1.5px solid #C9C9C9;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            color: #181818;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .template-coming-soon-footer {
+            padding: 14px 16px 16px;
+        }
+
+        .template-coming-soon-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #181818;
+            margin-bottom: 8px;
+        }
+
+        .template-coming-soon-desc {
+            font-size: 13px;
+            color: #706E6B;
+        }
+    </style>
+</head>
+<body>
+    <!-- Icon Sidebar -->
+    <aside class="dev-icon-sidebar">
+        <a href="../index.html" class="dev-icon-sidebar-item active" title="Home">
+            <div style="text-align: center;">
+                <div style="font-size: 20px;">🏠</div>
+                <div class="dev-icon-sidebar-label">Home</div>
+            </div>
+        </a>
+        <div class="dev-icon-sidebar-item" title="Activity">
+            <div style="text-align: center;">
+                <div style="font-size: 20px;">🔔</div>
+                <div class="dev-icon-sidebar-label">Activity</div>
+            </div>
+        </div>
+        <div class="dev-icon-sidebar-item" title="Jobs">
+            <div style="text-align: center;">
+                <div style="font-size: 20px;">⚡</div>
+                <div class="dev-icon-sidebar-label">Jobs</div>
+            </div>
+        </div>
+        <div class="dev-icon-sidebar-item" title="Toolkit">
+            <div style="text-align: center;">
+                <div style="font-size: 20px;">🔧</div>
+                <div class="dev-icon-sidebar-label">Toolkit</div>
+            </div>
+        </div>
+        <div class="dev-icon-sidebar-item" title="More">
+            <div style="text-align: center;">
+                <div style="font-size: 20px;">⋯</div>
+                <div class="dev-icon-sidebar-label">More</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Secondary Sidebar -->
+    <aside class="dev-secondary-sidebar">
+        <a href="dashboard.html" class="dev-dashboard-button">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <rect x="1" y="1" width="5" height="5" rx="1"/>
+                <rect x="8" y="1" width="5" height="5" rx="1"/>
+                <rect x="1" y="8" width="5" height="5" rx="1"/>
+                <rect x="8" y="8" width="5" height="5" rx="1"/>
+            </svg>
+            My Dashboard
+        </a>
+
+        <div class="dev-nav-section">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>Channels</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="storefronts-list.html" class="dev-nav-item active">Storefronts</a>
+                <a href="#" class="dev-nav-item">Agents</a>
+                <a href="#" class="dev-nav-item">TikTok</a>
+                <a href="#" class="dev-nav-item">ChatGPT</a>
+            </div>
+        </div>
+
+        <div class="dev-nav-section collapsed">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>Stacks</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="#" class="dev-nav-item">Stack 1</a>
+                <a href="#" class="dev-nav-item">Stack 2</a>
+            </div>
+        </div>
+
+        <div class="dev-nav-section collapsed">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>Security & Access</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="#" class="dev-nav-item">Permissions</a>
+                <a href="#" class="dev-nav-item">API Keys</a>
+            </div>
+        </div>
+
+        <div class="dev-nav-section collapsed">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>APIs</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="#" class="dev-nav-item">Endpoints</a>
+                <a href="#" class="dev-nav-item">Documentation</a>
+            </div>
+        </div>
+
+        <div class="dev-nav-section collapsed">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>Observability</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="#" class="dev-nav-item">Logs</a>
+                <a href="#" class="dev-nav-item">Metrics</a>
+            </div>
+        </div>
+
+        <div class="dev-nav-section collapsed">
+            <div class="dev-nav-section-header" onclick="toggleSection(this)">
+                <span>Preferences</span>
+                <span class="dev-nav-section-arrow">▼</span>
+            </div>
+            <div class="dev-nav-section-content">
+                <a href="#" class="dev-nav-item">Settings</a>
+                <a href="#" class="dev-nav-item">Profile</a>
+            </div>
+        </div>
+
+        <a href="#" class="dev-manage-nav">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
+                <path d="M13,6H8V1c0-0.6-0.4-1-1-1S6,0.4,6,1v5H1C0.4,6,0,6.4,0,7s0.4,1,1,1h5v5c0,0.6,0.4,1,1,1s1-0.4,1-1V8h5c0.6,0,1-0.4,1-1S13.6,6,13,6z"/>
+            </svg>
+            Manage Navigation
+        </a>
+    </aside>
+
+    <!-- Header -->
+    <header class="dev-header">
+        <a href="../index.html" class="dev-header-logo">
+            <span class="dev-cloud-icon">☁️</span>
+            <span>Developer App</span>
+        </a>
+        <div class="dev-header-search">
+            <input type="text" class="dev-search-input" placeholder="Search...">
+        </div>
+        <div class="dev-header-actions">
+            <button class="dev-icon-button" title="Settings">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <path d="M9,6.5C7.6,6.5,6.5,7.6,6.5,9s1.1,2.5,2.5,2.5s2.5-1.1,2.5-2.5S10.4,6.5,9,6.5z M17.4,10.6l-1.5-0.3c-0.1-0.4-0.3-0.8-0.5-1.2l0.9-1.2c0.3-0.4,0.2-1-0.1-1.3l-1.3-1.3c-0.3-0.3-0.9-0.4-1.3-0.1l-1.2,0.9c-0.4-0.2-0.8-0.4-1.2-0.5L10.9,4c-0.1-0.5-0.5-0.8-1-0.8H8.1c-0.5,0-0.9,0.3-1,0.8L6.8,5.6C6.4,5.7,6,5.9,5.6,6.1L4.4,5.2c-0.4-0.3-1-0.2-1.3,0.1L1.8,6.6C1.5,6.9,1.4,7.5,1.7,7.9l0.9,1.2C2.4,9.5,2.2,9.9,2.1,10.3l-1.5,0.3c-0.5,0.1-0.8,0.5-0.8,1v1.8c0,0.5,0.3,0.9,0.8,1l1.5,0.3c0.1,0.4,0.3,0.8,0.5,1.2l-0.9,1.2c-0.3,0.4-0.2,1,0.1,1.3l1.3,1.3c0.3,0.3,0.9,0.4,1.3,0.1l1.2-0.9c0.4,0.2,0.8,0.4,1.2,0.5l0.3,1.5c0.1,0.5,0.5,0.8,1,0.8h1.8c0.5,0,0.9-0.3,1-0.8l0.3-1.5c0.4-0.1,0.8-0.3,1.2-0.5l1.2,0.9c0.4,0.3,1,0.2,1.3-0.1l1.3-1.3c0.3-0.3,0.4-0.9,0.1-1.3l-0.9-1.2c0.2-0.4,0.4-0.8,0.5-1.2l1.5-0.3c0.5-0.1,0.8-0.5,0.8-1v-1.8C18.2,11.1,17.9,10.7,17.4,10.6z"/>
+                </svg>
+            </button>
+            <button class="dev-icon-button" title="Profile">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                    <circle cx="9" cy="5.5" r="3.5"/>
+                    <path d="M16,18H2c-0.6,0-1-0.4-1-1c0-3.3,2.7-6,6-6h2c3.3,0,6,2.7,6,6C17,17.6,16.6,18,16,18z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="dev-main-content choose-template-page">
+        <div class="choose-template-inner">
+            <h1 class="choose-template-title">Choose your template</h1>
+
+            <div class="template-grid">
+
+                <!-- Market Street -->
+                <a href="storefront-new.html" class="template-card">
+                    <div class="template-preview">
+                        <div class="preview-ms">
+                            <!-- Nav -->
+                            <div class="preview-ms-nav">
+                                <div class="preview-ms-nav-logo">
+                                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="#888" stroke-width="1.2"><path d="M1,5a4,4 0 1,0 8,0a4,4 0 1,0 -8,0"/><path d="M5,1v8M1,5h8"/></svg>
+                                </div>
+                                <div class="preview-ms-nav-links">
+                                    <span class="preview-ms-nav-link">Women</span>
+                                    <span class="preview-ms-nav-link">Men</span>
+                                    <span class="preview-ms-nav-link">Accessories</span>
+                                    <span class="preview-ms-nav-link sale">Sale</span>
+                                </div>
+                                <div class="preview-ms-nav-icons">
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                </div>
+                            </div>
+                            <!-- Hero -->
+                            <div class="preview-ms-hero">
+                                <div>
+                                    <div style="font-size:7px;color:rgba(255,255,255,0.9);font-weight:600;margin-bottom:3px;">Elevate Your Style Online</div>
+                                    <div style="font-size:5.5px;color:rgba(255,255,255,0.75);margin-bottom:5px;">Showcase apparel and accessories with elegance and ease</div>
+                                    <div class="preview-ms-hero-text">Shop the Collection</div>
+                                </div>
+                            </div>
+                            <!-- Products -->
+                            <div class="preview-ms-section-title">New Season Highlights</div>
+                            <div class="preview-ms-sub">Curated fashion pieces designed to inspire</div>
+                            <div class="preview-ms-products">
+                                <div class="preview-ms-product">
+                                    <div class="preview-ms-product-img shoe-1"></div>
+                                    <div class="preview-ms-product-name">Strappy Leather Heels</div>
+                                    <div class="preview-ms-product-price">$120.00</div>
+                                    <div class="preview-ms-product-swatches">
+                                        <div class="preview-ms-product-swatch" style="background:#c4a882"></div>
+                                        <div class="preview-ms-product-swatch" style="background:#222"></div>
+                                    </div>
+                                    <div class="preview-ms-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-ms-product">
+                                    <div class="preview-ms-product-img shoe-2"></div>
+                                    <div class="preview-ms-product-name">Title</div>
+                                    <div class="preview-ms-product-price">$0.00</div>
+                                    <div class="preview-ms-product-swatches">
+                                        <div class="preview-ms-product-swatch" style="background:#8B6914"></div>
+                                    </div>
+                                    <div class="preview-ms-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-ms-product">
+                                    <div class="preview-ms-product-img shoe-3"></div>
+                                    <div class="preview-ms-product-name">Title</div>
+                                    <div class="preview-ms-product-price">$0.00</div>
+                                    <div class="preview-ms-product-swatches">
+                                        <div class="preview-ms-product-swatch" style="background:#e8e8e8;border:1px solid #ccc"></div>
+                                    </div>
+                                    <div class="preview-ms-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-ms-product">
+                                    <div class="preview-ms-product-img shoe-4"></div>
+                                    <div class="preview-ms-product-name">Title</div>
+                                    <div class="preview-ms-product-price">$0.00</div>
+                                    <div class="preview-ms-product-swatches">
+                                        <div class="preview-ms-product-swatch" style="background:#2c2c2c"></div>
+                                    </div>
+                                    <div class="preview-ms-add-btn">Add to Cart</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-footer">
+                        <div class="template-name-group">
+                            <div class="template-name">Market Street</div>
+                            <div class="template-category">Fashion</div>
+                        </div>
+                        <button class="template-label-btn" onclick="event.preventDefault()">Label</button>
+                    </div>
+                </a>
+
+                <!-- Cosmetic Street -->
+                <a href="storefront-new.html" class="template-card">
+                    <div class="template-preview">
+                        <div class="preview-cs">
+                            <!-- Nav -->
+                            <div class="preview-cs-nav">
+                                <div class="preview-ms-nav-logo">
+                                    <svg width="8" height="8" viewBox="0 0 10 10" fill="none" stroke="#888" stroke-width="1.2"><path d="M1,5a4,4 0 1,0 8,0a4,4 0 1,0 -8,0"/><path d="M5,1v8M1,5h8"/></svg>
+                                </div>
+                                <div class="preview-ms-nav-links">
+                                    <span class="preview-ms-nav-link">Women</span>
+                                    <span class="preview-ms-nav-link">Men</span>
+                                    <span class="preview-ms-nav-link">Accessories</span>
+                                    <span class="preview-ms-nav-link sale">Sale</span>
+                                </div>
+                                <div class="preview-ms-nav-icons">
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                    <div class="preview-ms-nav-icon"></div>
+                                </div>
+                            </div>
+                            <!-- Hero -->
+                            <div class="preview-cs-hero">
+                                <div class="preview-cs-new-badge">NEW</div>
+                                <div class="preview-cs-hero-product">LIP TOY<br>pH staining lip oil</div>
+                            </div>
+                            <!-- Trending label -->
+                            <div class="preview-cs-trending">New and Trending</div>
+                            <!-- Products -->
+                            <div class="preview-cs-products">
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p1"></div>
+                                    <div class="preview-cs-product-price">$24.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p2"></div>
+                                    <div class="preview-cs-product-price">$25.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p3"></div>
+                                    <div class="preview-cs-product-price">$25.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p4"></div>
+                                    <div class="preview-cs-product-price">$24.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p5"></div>
+                                    <div class="preview-cs-product-price">$34.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                                <div class="preview-cs-product">
+                                    <div class="preview-cs-product-img p6"></div>
+                                    <div class="preview-cs-product-price">$58.00</div>
+                                    <div class="preview-cs-add-btn">Add to Cart</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-footer">
+                        <div class="template-name-group">
+                            <div class="template-name">Cosmetic Street</div>
+                            <div class="template-category">Cosmetics</div>
+                        </div>
+                        <button class="template-label-btn" onclick="event.preventDefault()">Label</button>
+                    </div>
+                </a>
+
+                <!-- Coming Soon -->
+                <div class="template-card coming-soon">
+                    <div class="template-preview preview-coming-soon">
+                        <div class="coming-soon-stack">
+                            <!-- Back card -->
+                            <div class="coming-soon-card-back">
+                                <div class="coming-soon-card-inner">
+                                    <div class="cs-mini-nav">
+                                        <div style="width:8px;height:8px;border-radius:50%;background:#4DB6AC;flex-shrink:0;"></div>
+                                        <span class="cs-mini-logo">Orbit</span>
+                                    </div>
+                                    <div style="height:28px;background:linear-gradient(135deg,#80CBC4 0%,#26A69A 100%);"></div>
+                                    <div class="cs-mini-content">
+                                        <div class="cs-mini-title">The React PWA</div>
+                                        <div class="cs-mini-sub">Starter Store for Retail</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Front card -->
+                            <div class="coming-soon-card-front">
+                                <div class="coming-soon-card-inner">
+                                    <div class="cs-mini-nav">
+                                        <div style="width:8px;height:8px;border-radius:50%;background:#388E3C;flex-shrink:0;"></div>
+                                        <span class="cs-mini-logo" style="color:#388E3C;">Indo Botanica</span>
+                                    </div>
+                                    <div style="height:28px;background:linear-gradient(135deg,#A5D6A7 0%,#388E3C 100%);display:flex;align-items:flex-end;padding:4px;">
+                                        <span style="font-size:4.5px;color:rgba(255,255,255,0.9);font-weight:600;">The React PWA Starter Store for Retail</span>
+                                    </div>
+                                    <div class="cs-mini-content">
+                                        <div class="cs-mini-title">Featured Products</div>
+                                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:3px;">
+                                            <div style="aspect-ratio:1;background:#C8E6C9;border-radius:2px;"></div>
+                                            <div style="aspect-ratio:1;background:#A5D6A7;border-radius:2px;"></div>
+                                            <div style="aspect-ratio:1;background:#81C784;border-radius:2px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="template-coming-soon-footer">
+                        <div class="template-coming-soon-title">Coming Soon</div>
+                        <div class="template-coming-soon-desc">Furniture Street Template and more</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script src="../assets/js/shared-nav.js"></script>
+    <script src="../assets/js/interactions.js"></script>
+</body>
+</html>

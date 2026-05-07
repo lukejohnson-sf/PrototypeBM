@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Storefronts - Business Manager</title>
+    <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-size: 13px;
+            color: #181818;
+            background: #F3F3F3;
+        }
+
+        /* ---- TOP HEADER ---- */
+        .bm-header {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 48px;
+            background: #032D60;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            z-index: 200;
+            gap: 8px;
+        }
+
+        .bm-header-grid-icon {
+            width: 28px; height: 28px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .bm-header-grid-icon svg { display: block; }
+
+        .bm-header-logo {
+            width: 32px; height: 32px;
+            background: #0176D3;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .bm-header-logo svg { color: #fff; }
+
+        .bm-header-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: #fff;
+            margin-right: 4px;
+        }
+
+        .bm-header-badge {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 2px 10px;
+            border-radius: 4px;
+        }
+
+        .bm-header-spacer { flex: 1; }
+
+        .bm-header-icon-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .bm-header-icon-btn {
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: rgba(255,255,255,0.85);
+            cursor: pointer;
+            border: none;
+            background: transparent;
+            transition: background 0.15s;
+        }
+
+        .bm-header-icon-btn:hover { background: rgba(255,255,255,0.15); }
+
+        .bm-header-star-btn {
+            display: flex; align-items: center; gap: 0;
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 4px;
+            height: 28px;
+            padding: 0 4px;
+            color: #fff;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        /* ---- LEFT SIDEBAR ---- */
+        .bm-sidebar {
+            position: fixed;
+            top: 48px; left: 0;
+            width: 210px;
+            height: calc(100vh - 48px);
+            background: #fff;
+            border-right: 1px solid #E5E5E5;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .bm-sidebar-section {
+            padding: 12px 12px 4px;
+        }
+
+        .bm-sidebar-section-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: #444;
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
+        }
+
+        .bm-site-dropdown {
+            width: 100%;
+            display: flex; align-items: center; gap: 8px;
+            padding: 6px 10px;
+            border: 1px solid #C9C9C9;
+            border-radius: 4px;
+            background: #fff;
+            font-size: 13px;
+            color: #181818;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+
+        .bm-site-dropdown svg { flex-shrink: 0; }
+        .bm-site-dropdown span { flex: 1; }
+        .bm-site-dropdown-arrow { color: #706E6B; font-size: 10px; }
+
+        .bm-quick-find {
+            width: 100%;
+            display: flex; align-items: center; gap: 6px;
+            padding: 6px 10px;
+            border: 1px solid #C9C9C9;
+            border-radius: 4px;
+            background: #fff;
+            margin-bottom: 8px;
+        }
+
+        .bm-quick-find input {
+            border: none; outline: none;
+            font-size: 13px; color: #181818;
+            width: 100%;
+            background: transparent;
+        }
+
+        .bm-quick-find input::placeholder { color: #9696A1; }
+
+        .bm-nav-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 12px;
+            font-size: 13px;
+            color: #181818;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 1px 4px;
+        }
+
+        .bm-nav-item:hover { background: #F3F3F3; }
+        .bm-nav-item.active { background: #E3F3FF; color: #0176D3; font-weight: 500; }
+
+        .bm-nav-section-header {
+            display: flex; align-items: center; gap: 8px;
+            padding: 7px 12px;
+            font-size: 13px;
+            color: #181818;
+            cursor: pointer;
+            margin: 1px 4px;
+            border-radius: 4px;
+            user-select: none;
+        }
+
+        .bm-nav-section-header:hover { background: #F3F3F3; }
+
+        .bm-nav-section-header svg { flex-shrink: 0; color: #706E6B; }
+        .bm-nav-chevron { margin-left: auto; font-size: 10px; color: #706E6B; transition: transform 0.15s; }
+        .bm-nav-section-header.collapsed .bm-nav-chevron { transform: rotate(-90deg); }
+
+        .bm-nav-children {
+            padding-left: 16px;
+        }
+
+        .bm-nav-section-header.collapsed + .bm-nav-children { display: none; }
+
+        .bm-nav-sub-item {
+            display: block;
+            padding: 6px 12px;
+            font-size: 13px;
+            color: #181818;
+            cursor: pointer;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 1px 4px;
+        }
+
+        .bm-nav-sub-item:hover { background: #F3F3F3; color: #0176D3; }
+        .bm-nav-sub-item.active { color: #0176D3; font-weight: 500; background: #E3F3FF; }
+
+        /* ---- MAIN CONTENT ---- */
+        .bm-main {
+            margin-top: 48px;
+            margin-left: 210px;
+            padding: 28px 32px;
+            min-height: calc(100vh - 48px);
+            background: #F3F3F3;
+        }
+
+        .bm-page-header {
+            display: flex; align-items: flex-start; justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .bm-page-title {
+            font-size: 22px;
+            font-weight: 700;
+            color: #181818;
+            margin-bottom: 2px;
+        }
+
+        .bm-page-count {
+            font-size: 13px;
+            color: #706E6B;
+        }
+
+        .bm-add-new-btn {
+            padding: 8px 20px;
+            background: #0176D3;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+
+        .bm-add-new-btn:hover { background: #014486; }
+
+        /* ---- TABLE ---- */
+        .bm-table-wrapper {
+            background: #fff;
+            border: 1px solid #E5E5E5;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .bm-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bm-table thead th {
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #444;
+            border-bottom: 1px solid #E5E5E5;
+            background: #fff;
+            white-space: nowrap;
+        }
+
+        .bm-table tbody tr {
+            border-bottom: 1px solid #E5E5E5;
+        }
+
+        .bm-table tbody tr:last-child { border-bottom: none; }
+        .bm-table tbody tr:hover { background: #F8F8F8; }
+
+        .bm-table td {
+            padding: 12px 16px;
+            vertical-align: middle;
+        }
+
+        .bm-table-link {
+            color: #0176D3;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .bm-table-link:hover { text-decoration: underline; }
+
+        .bm-tag {
+            display: inline-block;
+            padding: 2px 10px;
+            border: 1px solid #C9C9C9;
+            border-radius: 4px;
+            font-size: 12px;
+            color: #3E3E3C;
+            background: #fff;
+        }
+
+        .bm-status-badge {
+            display: inline-flex; align-items: center;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .bm-status-badge.error {
+            background: #FDDEDE;
+            color: #BA0517;
+            border: 1px solid #F2A6A6;
+        }
+
+        .bm-status-badge.success {
+            background: #EFF7EE;
+            color: #2E7D32;
+            border: 1px solid #A5D6A7;
+        }
+
+        .bm-view-icon {
+            color: #0176D3;
+            cursor: pointer;
+        }
+
+        .bm-row-action-btn {
+            width: 24px; height: 24px;
+            border: 1px solid #C9C9C9;
+            border-radius: 50%;
+            background: #fff;
+            display: inline-flex; align-items: center; justify-content: center;
+            cursor: pointer;
+            color: #706E6B;
+            font-size: 10px;
+        }
+
+        .bm-row-action-btn:hover { background: #F3F3F3; }
+
+        .col-name { width: 260px; }
+        .col-type { width: auto; }
+        .col-sites { width: 200px; }
+        .col-view { width: 80px; text-align: center; }
+        .col-status { width: 160px; }
+        .col-action { width: 48px; text-align: center; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="bm-header">
+        <button class="bm-header-grid-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="currentColor">
+                <rect x="1" y="1" width="4" height="4" rx="0.5"/>
+                <rect x="7" y="1" width="4" height="4" rx="0.5"/>
+                <rect x="13" y="1" width="4" height="4" rx="0.5"/>
+                <rect x="1" y="7" width="4" height="4" rx="0.5"/>
+                <rect x="7" y="7" width="4" height="4" rx="0.5"/>
+                <rect x="13" y="7" width="4" height="4" rx="0.5"/>
+                <rect x="1" y="13" width="4" height="4" rx="0.5"/>
+                <rect x="7" y="13" width="4" height="4" rx="0.5"/>
+                <rect x="13" y="13" width="4" height="4" rx="0.5"/>
+            </svg>
+        </button>
+        <div class="bm-header-logo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.87-3.13-7-7-7z"/>
+            </svg>
+        </div>
+        <span class="bm-header-title">Administration</span>
+        <span class="bm-header-badge">Sandbox - zzpm</span>
+        <div class="bm-header-spacer"></div>
+        <div class="bm-header-icon-group">
+            <button class="bm-header-star-btn">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M7,1l1.8,3.6L13,5.3l-3,2.9l0.7,4.1L7,10.4l-3.7,1.9L4,8.2L1,5.3l4.2-0.6L7,1z"/></svg>
+                <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" style="margin-left:2px"><path d="M5,7L1,3h8L5,7z"/></svg>
+            </button>
+            <button class="bm-header-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8,0C3.6,0,0,3.6,0,8s3.6,8,8,8s8-3.6,8-8S12.4,0,8,0z M9,12H7v-2h2V12z M9,9H7V4h2V9z"/></svg>
+            </button>
+            <button class="bm-header-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8,16c1.1,0,2-0.9,2-2H6C6,15.1,6.9,16,8,16z M14,11V7c0-3-1.6-5.5-4.5-6.2V0H6.5v0.8C3.6,1.5,2,4,2,7v4L0,13h16L14,11z"/></svg>
+            </button>
+            <button class="bm-header-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><circle cx="8" cy="5" r="3"/><path d="M14,14H2c0-3.3,2.7-6,6-6S14,10.7,14,14z"/></svg>
+            </button>
+            <button class="bm-header-icon-btn">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M14,7H9V2c0-0.6-0.4-1-1-1S7,1.4,7,2v5H2C1.4,7,1,7.4,1,8s0.4,1,1,1h5v5c0,0.6,0.4,1,1,1s1-0.4,1-1V9h5c0.6,0,1-0.4,1-1S14.6,7,14,7z" transform="rotate(45 8 8)"/></svg>
+            </button>
+        </div>
+    </header>
+
+    <!-- Left Sidebar -->
+    <aside class="bm-sidebar">
+        <div class="bm-sidebar-section">
+            <div class="bm-sidebar-section-label">Site</div>
+            <div class="bm-site-dropdown">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="color:#706E6B"><rect x="1" y="1" width="3" height="3" rx="0.5"/><rect x="5.5" y="1" width="3" height="3" rx="0.5"/><rect x="10" y="1" width="3" height="3" rx="0.5"/><rect x="1" y="5.5" width="3" height="3" rx="0.5"/><rect x="5.5" y="5.5" width="3" height="3" rx="0.5"/><rect x="10" y="5.5" width="3" height="3" rx="0.5"/><rect x="1" y="10" width="3" height="3" rx="0.5"/><rect x="5.5" y="10" width="3" height="3" rx="0.5"/><rect x="10" y="10" width="3" height="3" rx="0.5"/></svg>
+                <span>Market Street</span>
+                <span class="bm-site-dropdown-arrow">▼</span>
+            </div>
+            <div class="bm-quick-find">
+                <svg width="13" height="13" viewBox="0 0 13 13" fill="none" stroke="#9696A1" stroke-width="1.5"><circle cx="5.5" cy="5.5" r="4"/><line x1="9" y1="9" x2="12" y2="12"/></svg>
+                <input type="text" placeholder="Quick Find">
+            </div>
+        </div>
+
+        <a href="#" class="bm-nav-item">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor" style="color:#706E6B"><path d="M7,1L0,7h2v6h4V9h2v4h4V7h2L7,1z"/></svg>
+            Home
+        </a>
+
+        <div class="bm-nav-section-header collapsed" onclick="toggleBmSection(this)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="3" width="12" height="1.5" rx="0.75"/><rect x="1" y="6.25" width="12" height="1.5" rx="0.75"/><rect x="1" y="9.5" width="12" height="1.5" rx="0.75"/></svg>
+            Replication
+            <span class="bm-nav-chevron">▼</span>
+        </div>
+        <div class="bm-nav-children"></div>
+
+        <div class="bm-nav-section-header collapsed" onclick="toggleBmSection(this)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="5.5" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M5,5.5c0-1.1,0.9-2,2-2s2,0.9,2,2c0,1.5-2,3-2,3S5,7,5,5.5z" stroke="none" fill="currentColor"/><circle cx="7" cy="10" r="0.8" fill="currentColor"/></svg>
+            Organization
+            <span class="bm-nav-chevron">▼</span>
+        </div>
+        <div class="bm-nav-children"></div>
+
+        <div class="bm-nav-section-header" onclick="toggleBmSection(this)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><rect x="1" y="1" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="1" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="1" y="8" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/><rect x="8" y="8" width="5" height="5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3"/></svg>
+            Sites
+            <span class="bm-nav-chevron">▼</span>
+        </div>
+        <div class="bm-nav-children">
+            <a href="#" class="bm-nav-sub-item">Manage Sites</a>
+            <a href="storefronts-list.html" class="bm-nav-sub-item active">Storefronts</a>
+            <a href="#" class="bm-nav-sub-item">Customer Lists</a>
+            <a href="#" class="bm-nav-sub-item">Content Libraries</a>
+            <a href="#" class="bm-nav-sub-item">Batch Processes Sites</a>
+            <a href="#" class="bm-nav-sub-item">Embedded CDN Settings</a>
+        </div>
+
+        <div class="bm-nav-section-header collapsed" onclick="toggleBmSection(this)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><path d="M2,2h10v10H2V2z" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M5,2v10M9,2v10M2,5h10M2,9h10" stroke="currentColor" stroke-width="1"/></svg>
+            Site Development
+            <span class="bm-nav-chevron">▼</span>
+        </div>
+        <div class="bm-nav-children"></div>
+
+        <div class="bm-nav-section-header collapsed" onclick="toggleBmSection(this)">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="7" r="2.5"/><path d="M7,1v2M7,11v2M1,7h2M11,7h2M2.93,2.93l1.41,1.41M9.66,9.66l1.41,1.41M2.93,11.07l1.41-1.41M9.66,4.34l1.41-1.41" stroke="currentColor" stroke-width="1.3" fill="none"/></svg>
+            Global Preferences
+            <span class="bm-nav-chevron">▼</span>
+        </div>
+        <div class="bm-nav-children"></div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="bm-main">
+        <div class="bm-page-header">
+            <div>
+                <h1 class="bm-page-title">Storefronts</h1>
+                <div class="bm-page-count">1 Storefront</div>
+            </div>
+            <a href="storefront-choose-template.html" class="bm-add-new-btn">Add New</a>
+        </div>
+
+        <div class="bm-table-wrapper">
+            <table class="bm-table">
+                <thead>
+                    <tr>
+                        <th class="col-name">Name</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-sites">Sites</th>
+                        <th class="col-view">View</th>
+                        <th class="col-status">Status</th>
+                        <th class="col-action"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-name">
+                            <a href="storefront-detail.html" class="bm-table-link">SilkRoad</a>
+                        </td>
+                        <td class="col-type">Storefront Next</td>
+                        <td class="col-sites">
+                            <span class="bm-tag">RefArch</span>
+                        </td>
+                        <td class="col-view">
+                            <span class="bm-view-icon">
+                                <svg width="18" height="12" viewBox="0 0 18 12" fill="currentColor"><path d="M9,0C5,0,1.5,2.4,0,6c1.5,3.6,5,6,9,6s7.5-2.4,9-6C16.5,2.4,13,0,9,0z M9,10c-2.2,0-4-1.8-4-4s1.8-4,4-4s4,1.8,4,4S11.2,10,9,10z M9,4C7.3,4,6,5.3,6,7s1.3,3,3,3s3-1.3,3-3S10.7,4,9,4z"/></svg>
+                            </span>
+                        </td>
+                        <td class="col-status">
+                            <span class="bm-status-badge error">Deletion failed</span>
+                        </td>
+                        <td class="col-action">
+                            <button class="bm-row-action-btn">▼</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        function toggleBmSection(header) {
+            header.classList.toggle('collapsed');
+        }
+    </script>
+</body>
+</html>
